@@ -1,0 +1,7 @@
+{
+  "name": "simobile_TelurGulung",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
