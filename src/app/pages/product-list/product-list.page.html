@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Daftar Produk Toko</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar 
+      [(ngModel)]="searchTerm" 
+      (ionInput)="filterProducts()" 
+      placeholder="Cari nama barang...">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item 
+      *ngFor="let product of filteredProducts" 
+      [routerLink]="['/product-detail', product.id]" 
+      detail="true">
+      
+      <ion-thumbnail slot="start">
+        <img [src]="product.urlGambar !== '' ? product.urlGambar : 'assets/shapes.svg'" alt="Gambar Produk" />
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2>{{ product.nama }}</h2>
+        <p>Kategori: {{ product.kategori }}</p>
+        <p>Harga: Rp {{ product.hargaJual | number }}</p>
+        <p [style.color]="product.stok === 0 ? 'red' : 'inherit'">
+          Stok: {{ product.stok > 0 ? product.stok : 'Habis' }}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
