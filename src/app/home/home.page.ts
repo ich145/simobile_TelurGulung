@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  totalProduk: number = 10;
+  totalTransaksi: number = 250000;
+  produkTerlaris: string = 'Minyak Goreng 500 Ml';
+
   constructor() {}
 
 }
