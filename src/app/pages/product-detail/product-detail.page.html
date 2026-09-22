@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/product-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Produk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="product">
+  <ion-card>
+    <img [src]="product.urlGambar !== '' ? product.urlGambar : 'assets/shapes.svg'" alt="Gambar Produk" />
+    
+    <ion-card-header>
+      <ion-card-title>{{ product.nama }}</ion-card-title>
+      <ion-card-subtitle>{{ product.kategori }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label>Stok Sisa:</ion-label>
+          <ion-badge [color]="product.stok > 0 ? 'success' : 'danger'">
+            {{ product.stok }}
+          </ion-badge>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Harga Beli:</ion-label>
+          <ion-text color="medium">Rp {{ product.hargaBeli | number }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Harga Jual:</ion-label>
+          <ion-text color="dark"><b>Rp {{ product.hargaJual | number }}</b></ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Estimasi Keuntungan:</ion-label>
+          <ion-text color="success">
+            <b>Rp {{ (product.hargaJual - product.hargaBeli) | number }}</b>
+          </ion-text>
+        </ion-item>
+      </ion-list>
+
+      <ion-button 
+        expand="block" 
+        color="primary" 
+        class="ion-margin-top"
+        [disabled]="product.stok === 0" 
+        (click)="addToCart()">
+        {{ product.stok > 0 ? 'Tambah ke Keranjang' : 'Stok Habis' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
