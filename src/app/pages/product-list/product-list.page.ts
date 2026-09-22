@@ -9,6 +9,7 @@ import { Product } from '../../models/product.model';
   standalone: false
 })
 export class ProductListPage implements OnInit {
+
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];
   searchTerm: string = '';
@@ -22,11 +23,12 @@ export class ProductListPage implements OnInit {
 
   filterProducts() {
     const term = this.searchTerm.toLowerCase().trim();
+
     if (!term) {
       this.filteredProducts = [...this.allProducts];
     } else {
-      this.filteredProducts = this.allProducts.filter(p =>
-        p.nama.toLowerCase().includes(term)
+      this.filteredProducts = this.allProducts.filter(product =>
+        product.nama.toLowerCase().includes(term)
       );
     }
   }

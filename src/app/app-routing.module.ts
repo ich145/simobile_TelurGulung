@@ -9,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'product-list',
-    loadComponent: () => import('./pages/product-list/product-list.page').then( m => m.ProductListPage)
+    loadChildren: () => import('./pages/product-list/product-list.module').then( m => m.ProductListPageModule)
   },
   {
     path: 'product-detail/:id',
-    loadComponent: () => import('./pages/product-detail/product-detail.page').then( m => m.ProductDetailPage)
+    loadChildren: () => import('./pages/product-detail/product-detail.module').then( m => m.ProductDetailPageModule)
   }
 ];
 
