@@ -28,15 +28,21 @@ export class ProductListPage implements OnInit {
     this.filteredProducts = [...this.allProducts];
   }
 
-  filterProducts() {
-    const term = this.searchTerm.toLowerCase().trim();
+  filterProducts(event?: CustomEvent) {
+    const value = event?.detail?.value ?? this.searchTerm;
+    this.searchTerm = value;
+    const term = this.normalizeText(value);
 
     if (!term) {
       this.filteredProducts = [...this.allProducts];
     } else {
       this.filteredProducts = this.allProducts.filter((product) =>
-        product.nama.toLowerCase().includes(term),
+        this.normalizeText(product.nama).startsWith(term),
       );
     }
+  }
+
+  private normalizeText(value: string): string {
+    return value.toLowerCase().trim().replace(/\s+/g, ' ');
   }
 }
