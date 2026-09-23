@@ -7,8 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="product">
-  <ion-card>
+<ion-content class="ion-padding">
+  <ion-card *ngIf="product">
     <img [src]="product.urlGambar !== '' ? product.urlGambar : 'assets/shapes.svg'" alt="Gambar Produk" />
     
     <ion-card-header>
@@ -53,4 +53,10 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
+
+  <div *ngIf="!product" class="empty-state">
+    <ion-text color="medium">
+      <p>Produk tidak ditemukan.</p>
+    </ion-text>
+  </div>
 </ion-content>

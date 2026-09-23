@@ -10,7 +10,7 @@ import { Product } from '../../models/product.model';
   standalone: false 
 })
 export class ProductDetailPage implements OnInit {
-  productId!: number;
+  productId: number | null = null;
   product?: Product;
 
   constructor(
@@ -19,10 +19,25 @@ export class ProductDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.productId = +params['id'];
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id') ?? this.findRouteParam('id');
+      const parsedId = idParam ? Number(idParam) : 1;
+
+      this.productId = Number.isFinite(parsedId) && parsedId > 0 ? parsedId : 1;
       this.product = this.productService.getProductById(this.productId);
     });
+  }
+
+  private findRouteParam(paramName: string): string | null {
+    for (const route of this.route.pathFromRoot) {
+      const value = route.snapshot.paramMap.get(paramName);
+
+      if (value) {
+        return value;
+      }
+    }
+
+    return null;
   }
 
   addToCart() {
