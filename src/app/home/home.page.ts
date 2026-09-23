@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../services/product.services';
 
 @Component({
   selector: 'app-home',
@@ -6,12 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  totalProduk: number = 10;
-  totalTransaksi: number = 250000;
-  produkTerlaris: string = 'Minyak Goreng 500 Ml';
+  totalProduk: number = 0;
+  totalTransaksi: number = 0;
+  produkTerlaris: string = '-';
 
-  constructor() {}
+  constructor(private productService: ProductService) {}
 
+  ngOnInit() {
+    this.hitungTotalProduk();
+  }
+
+  hitungTotalProduk() {
+    const listBarang = this.productService.getProducts();
+    if (listBarang) {
+      this.totalProduk = listBarang.length; // Otomatis ngambil dari service
+    }
+  }
 }

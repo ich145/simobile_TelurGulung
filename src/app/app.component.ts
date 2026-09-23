@@ -7,9 +7,13 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  constructor() { }
 
   logout() {
     alert('Logout berhasil!');
+  }
+
+  toggleDarkMode(event: any) {
+    document.body.classList.toggle('dark', event.detail.checked);
   }
 }
