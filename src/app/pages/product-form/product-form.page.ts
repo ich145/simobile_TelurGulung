@@ -160,6 +160,24 @@ export class ProductFormPage implements OnInit {
   cancel() {
     this.router.navigate(['/product-list']);
   }
+  
+  /*
+  // Menghapus produk
+  deleteProduct() {
+    if (this.productId === null) {
+      return;
+    }
+      
+
+    const deleted = this.productService.deleteProduct(this.productId);
+
+    if (deleted) {
+      this.router.navigate(['/product-list']);
+    }
+  }*/
+
+
+
   animateForm() {
     const formElement = document.querySelector('#productFormAnimation') as HTMLElement;
 

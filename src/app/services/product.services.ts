@@ -47,6 +47,18 @@ export class ProductService {
     this.products[index] = updatedProduct;
     return true;
   }
+  /*
+  //DELETE
+  deleteProduct(id: number): boolean {
+    const index = this.products.findIndex(product => product.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    this.products.splice(index, 1);
+    return true;
+  }*/
 
   //buat ID baru
   getNextId(): number {
