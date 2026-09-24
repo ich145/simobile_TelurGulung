@@ -186,7 +186,10 @@ export class ProductFormPage implements OnInit {
 
     animation.play();
   }
+
   ionViewDidEnter() {
-    this.animateForm();
+    setTimeout(() => {
+      this.animateForm();
+    }, 50);
   }
 }
