@@ -22,6 +22,9 @@ export class ProductListPage implements OnInit {
   goToDetail(product: Product) {
     this.router.navigate(['/product-detail', product.id]);
   }
+  goToAddProduct() {
+    this.router.navigate(['/product-form']);
+  }
   
   ngOnInit() {
     this.allProducts = this.productService.getProducts();

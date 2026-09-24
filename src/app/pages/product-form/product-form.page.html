@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ isEditMode ? 'Edit Produk' : 'Tambah Produk' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form id="productFormAnimation" [formGroup]="productForm" (ngSubmit)="saveProduct()">
+
+    <!-- Nama -->
+    <ion-item>
+      <ion-input
+        label="Nama Produk"
+        labelPlacement="stacked"
+        type="text"
+        formControlName="nama"
+        placeholder="Masukkan nama produk">
+      </ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="isInvalid('nama')">
+      <p class="error-message">
+        Nama produk wajib diisi.
+      </p>
+    </ion-text>
+
+
+    <!-- Harga Beli -->
+    <ion-item>
+      <ion-input
+        label="Harga Beli"
+        labelPlacement="stacked"
+        type="number"
+        formControlName="hargaBeli"
+        placeholder="Contoh: 10000">
+      </ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="isInvalid('hargaBeli')">
+      <p class="error-message">
+        Harga beli wajib diisi dan harus lebih dari 0.
+      </p>
+    </ion-text>
+
+
+    <!-- Harga Jual -->
+    <ion-item>
+      <ion-input
+        label="Harga Jual"
+        labelPlacement="stacked"
+        type="number"
+        formControlName="hargaJual"
+        placeholder="Contoh: 12000">
+      </ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="isInvalid('hargaJual')">
+      <p class="error-message">
+        Harga jual wajib diisi dan harus lebih dari 0.
+      </p>
+    </ion-text>
+
+
+    <!-- Stok -->
+    <ion-item>
+      <ion-input
+        label="Stok"
+        labelPlacement="stacked"
+        type="number"
+        formControlName="stok"
+        placeholder="Contoh: 10">
+      </ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="isInvalid('stok')">
+      <p class="error-message">
+        Stok wajib diisi dan tidak boleh negatif.
+      </p>
+    </ion-text>
+
+
+    <!-- Kategori -->
+    <ion-item>
+      <ion-input
+        label="Kategori"
+        labelPlacement="stacked"
+        type="text"
+        formControlName="kategori"
+        placeholder="Contoh: Sembako">
+      </ion-input>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="isInvalid('kategori')">
+      <p class="error-message">
+        Kategori wajib diisi.
+      </p>
+    </ion-text>
+
+
+    <!-- URL Gambar -->
+    <ion-item>
+      <ion-input
+        label="URL Gambar"
+        labelPlacement="stacked"
+        type="url"
+        formControlName="urlGambar"
+        placeholder="https://...">
+      </ion-input>
+    </ion-item>
+
+
+    <!-- Tombol -->
+    <div class="button-container">
+
+      <ion-button
+        expand="block"
+        type="submit">
+        {{ isEditMode ? 'Simpan Perubahan' : 'Tambah Produk' }}
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        type="button"
+        (click)="cancel()">
+        Batal
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

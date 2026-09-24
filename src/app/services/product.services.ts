@@ -27,4 +27,32 @@ export class ProductService {
   getProductById(id: number): Product | undefined {
     return this.products.find(p => p.id === id);
   }
+
+  //add new product to the list
+  addProduct(product: Product): void {
+    this.products.push(product);
+  }
+
+  //edit product that already exists in the list
+  updateProduct(updatedProduct: Product): boolean {
+    const index = this.products.findIndex(
+      product => product.id === updatedProduct.id
+    );
+
+    if (index === -1) {
+      return false;
+    }
+
+    this.products[index] = updatedProduct;
+    return true;
+  }
+
+  //buat ID baru
+  getNextId(): number {
+    if (this.products.length === 0) {
+      return 1;
+    }
+
+    return Math.max(...this.products.map(product => product.id)) + 1;
+  }
 }

@@ -9,7 +9,11 @@
 
 <ion-content class="ion-padding">
   <ion-card *ngIf="product">
-    <img [src]="product.urlGambar !== '' ? product.urlGambar : 'assets/shapes.svg'" alt="Gambar Produk" />
+    <img
+      id="productImage"
+      [src]="product.urlGambar !== '' ? product.urlGambar : 'assets/shapes.svg'"
+      alt="Gambar Produk"
+    />
     
     <ion-card-header>
       <ion-card-title>{{ product.nama }}</ion-card-title>
@@ -50,6 +54,14 @@
         [disabled]="product.stok === 0" 
         (click)="addToCart()">
         {{ product.stok > 0 ? 'Tambah ke Keranjang' : 'Stok Habis' }}
+      </ion-button>
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="primary"
+        class="ion-margin-top"
+        (click)="goToEdit()">
+        Edit Produk
       </ion-button>
     </ion-card-content>
   </ion-card>

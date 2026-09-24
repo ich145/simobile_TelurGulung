@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.services';
 import { Product } from '../../models/product.model';
 import { CartService } from '../../services/cart.services';
+import { Router } from '@angular/router';
+import { AnimationController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,7 +19,9 @@ export class ProductDetailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router,
+    private animationCtrl: AnimationController
   ) {}
 
   ngOnInit() {
@@ -41,6 +45,11 @@ export class ProductDetailPage implements OnInit {
 
     return null;
   }
+  goToEdit() {
+    if (this.product) {
+      this.router.navigate(['/product-form', this.product.id]);
+    }
+  }
 
   addToCart() {
     if (this.product) {
@@ -49,5 +58,27 @@ export class ProductDetailPage implements OnInit {
 
       console.log(this.cartService.cartItems);
     }
+  }
+  fadeInProductImage() {
+    const imageElement = document.querySelector('#productImage') as HTMLElement;
+
+    if (!imageElement) {
+      return;
+    }
+
+    const animation = this.animationCtrl
+      .create()
+      .addElement(imageElement)
+      .duration(800)
+      .keyframes([
+        { offset: 0, opacity: '0' },
+        { offset: 1, opacity: '1' }
+      ]);
+
+    animation.play();
+  }
+  
+  ionViewDidEnter() {
+    this.fadeInProductImage();
   }
 }
