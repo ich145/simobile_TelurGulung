@@ -19,7 +19,7 @@ export class ProductService {
     { id: 10, nama: 'Biskuit', stok: 25, hargaBeli: 7000, hargaJual: 9000, kategori: 'Makanan', urlGambar: 'assets/products/biskuit.jpg' }
   ];
 
-  constructor() {}
+  constructor() { }
 
   getProducts(): Product[] {
     return this.products;
@@ -67,5 +67,17 @@ export class ProductService {
     }
 
     return Math.max(...this.products.map(product => product.id)) + 1;
+  }
+
+  kurangiStok(productId: number, jumlah: number): void {
+    for (var i = 0; i < this.products.length; i++) {
+      if (this.products[i].id === productId) {
+        this.products[i].stok -= jumlah;
+        if (this.products[i].stok < 0) {
+          this.products[i].stok = 0;
+        }
+        break;
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.services';
 import { TransactionService } from '../../services/transaction.services';
 import { CartItem } from '../../models/cart-item.model';
+import { ProductService } from '../../services/product.services';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ export class CartPage implements OnInit {
   constructor(
     private cartService: CartService,
     private transactionService: TransactionService,
+    private productService: ProductService,
     private alertController: AlertController,
     private router: Router
   ) { }
@@ -64,6 +66,9 @@ export class CartPage implements OnInit {
         {
           text: 'Konfirmasi',
           handler: () => {
+            for (var i = 0; i < this.cartItems.length; i++) {
+              this.productService.kurangiStok(this.cartItems[i].product.id, this.cartItems[i].quantity);
+            }
             this.transactionService.addTransaction(this.cartItems, this.total);
             this.cartService.clearCart();
             this.refreshCart();
