@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Riwayat Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let trx of transactions" [routerLink]="['/transaction-detail', trx.id]" button>
+      <ion-label>
+        <h2>Transaksi #{{ trx.id }}</h2>
+        <p>{{ trx.tanggal }}</p>
+      </ion-label>
+      <ion-note slot="end">Rp{{ trx.total }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="transactions.length === 0">
+    <ion-label>Belum ada transaksi</ion-label>
+  </ion-item>
+</ion-content>

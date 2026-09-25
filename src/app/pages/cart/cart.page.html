@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Cart</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/product-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Keranjang</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,22 +12,32 @@
     <ion-item *ngFor="let item of cartItems">
       <ion-label>
         <h2>{{ item.product.nama }}</h2>
-        <p>
-          Rp{{ item.product.hargaJual }}
-        </p>
-        <p>
-          Jumlah: {{ item.quantity }}
-        </p>
+        <p>Rp{{ item.product.hargaJual }}</p>
       </ion-label>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="kurangQty(item.product.id)">-</ion-button>
+        <ion-note>{{ item.quantity }}</ion-note>
+        <ion-button
+          (click)="tambahQty(item.product.id)"
+          [disabled]="item.quantity >= item.product.stok">+</ion-button>
+        <ion-button color="danger" (click)="hapusItem(item.product.id)">Hapus</ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-label>
-      <strong>Total</strong>
-    </ion-label>
-    <ion-note slot="end">
-      Rp{{ total }}
-    </ion-note>
+  <ion-item *ngIf="cartItems.length === 0">
+    <ion-label>Keranjang masih kosong</ion-label>
   </ion-item>
+
+  <ion-item>
+    <ion-label><strong>Total</strong></ion-label>
+    <ion-note slot="end">Rp{{ total }}</ion-note>
+  </ion-item>
+
+  <ion-button expand="block" [disabled]="cartItems.length === 0" (click)="checkout()">
+    Konfirmasi Transaksi
+  </ion-button>
 </ion-content>
+
+<ion-button (click)="refreshCart()">REFRESH MANUAL</ion-button>

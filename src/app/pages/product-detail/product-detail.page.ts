@@ -54,7 +54,7 @@ export class ProductDetailPage implements OnInit {
   addToCart() {
     if (this.product) {
       this.cartService.addToCart(this.product)
-      console.log('Barang ditambahkan:', this.product.nama);
+      console.log('DETAIL liat instance:', this.cartService);
 
       console.log(this.cartService.cartItems);
     }

@@ -31,6 +31,15 @@ const routes: Routes = [
     path: 'product-form/:id',
     loadChildren: () =>import('./pages/product-form/product-form.module').then(m => m.ProductFormPageModule)
   },
+  {
+    path: 'transaction-history',
+    loadChildren: () => import('./pages/transaction-history/transaction-history.module').then( m => m.TransactionHistoryPageModule)
+  },
+  {
+    path: 'transaction-detail/:id',
+    loadChildren: () => import('./pages/transaction-detail/transaction-detail.module').then( m => m.TransactionDetailPageModule)
+  },
+
 
 ];
 

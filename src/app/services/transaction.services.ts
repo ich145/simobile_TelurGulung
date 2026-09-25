@@ -8,40 +8,48 @@ import { CartItem } from '../models/cart-item.model';
 export class TransactionService {
     private transactions: Transaction[] = [];
 
-    constructor() {}
+    constructor() { }
 
-    // Menyimpan transaksi baru
     addTransaction(items: CartItem[], total: number): Transaction {
+        var copiedItems: CartItem[] = [];
+        for (var i = 0; i < items.length; i++) {
+            copiedItems.push(items[i]);
+        }
+
         const transaction: Transaction = {
-        id: this.getNextId(),
-        tanggal: new Date().toISOString(),
-        items: [...items],
-        total: total,
+            id: this.getNextId(),
+            tanggal: new Date().toISOString(),
+            items: copiedItems,
+            total: total,
         };
 
         this.transactions.push(transaction);
-
         return transaction;
     }
 
-    // Mengambil semua transaksi
     getTransactions(): Transaction[] {
         return this.transactions;
     }
 
-    // Mengambil transaksi berdasarkan ID
     getTransactionById(id: number): Transaction | undefined {
-        return this.transactions.find((transaction) => transaction.id === id);
+        for (var i = 0; i < this.transactions.length; i++) {
+            if (this.transactions[i].id === id) {
+                return this.transactions[i];
+            }
+        }
+        return undefined;
     }
 
-    // Membuat ID transaksi baru
     private getNextId(): number {
         if (this.transactions.length === 0) {
-        return 1;
+            return 1;
         }
-
-        return (
-        Math.max(...this.transactions.map((transaction) => transaction.id)) + 1
-        );
+        var maxId = 0;
+        for (var i = 0; i < this.transactions.length; i++) {
+            if (this.transactions[i].id > maxId) {
+                maxId = this.transactions[i].id;
+            }
+        }
+        return maxId + 1;
     }
 }

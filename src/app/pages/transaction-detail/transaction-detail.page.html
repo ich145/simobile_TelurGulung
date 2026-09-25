@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/transaction-history"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="transaction">
+  <ion-item>
+    <ion-label>
+      <h2>Transaksi #{{ transaction.id }}</h2>
+      <p>{{ transaction.tanggal }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngFor="let item of transaction.items">
+      <ion-label>
+        <h3>{{ item.product.nama }}</h3>
+        <p>{{ item.quantity }} x Rp{{ item.product.hargaJual }}</p>
+      </ion-label>
+      <ion-note slot="end">Rp{{ item.quantity * item.product.hargaJual }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label><strong>Total</strong></ion-label>
+    <ion-note slot="end">Rp{{ transaction.total }}</ion-note>
+  </ion-item>
+</ion-content>
