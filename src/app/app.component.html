@@ -1,65 +1,67 @@
 <ion-app>
+  <!-- drawer jadi 3 dari 5 -->
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>List Menu</ion-title>
+        <ion-title>Pengaturan & Akun</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="ion-padding">
       <ion-list lines="none">
         <ion-menu-toggle auto-hide="false">
-          <ion-item routerLink="/home" button>
-            <ion-icon name="home-outline" slot="start" color="secondary"></ion-icon>
-            <ion-label>Dashboard</ion-label>
+          <ion-item routerLink="/pengaturan" button>
+            <ion-icon name="settings-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>Pengaturan</ion-label>
           </ion-item>
 
-          <ion-item routerLink="/product-list" button>
-            <ion-icon name="list-outline" slot="start" color="secondary"></ion-icon>
-            <ion-label>Produk</ion-label>
-          </ion-item>
-
-          <ion-item routerLink="/transaction" button>
-            <ion-icon name="receipt-outline" slot="start" color="secondary"></ion-icon>
-            <ion-label>Transaksi</ion-label>
-          </ion-item>
-
-          <ion-item routerLink="/profile" button>
-            <ion-icon name="person-outline" slot="start" color="secondary"></ion-icon>
-            <ion-label>Profil</ion-label>
+          <ion-item routerLink="/about" button>
+            <ion-icon name="help-circle-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>About</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
+        <!-- sememtara togle disini, bisa dipindah ke setting -->
         <ion-item>
           <ion-icon name="moon-outline" slot="start" color="secondary"></ion-icon>
           <ion-label>Dark Mode</ion-label>
           <ion-toggle (ionChange)="toggleDarkMode($event)"></ion-toggle>
         </ion-item>
 
+        <ion-menu-toggle auto-hide="false">
+          <ion-item button (click)="logout()">
+            <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+            <ion-label color="danger">Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </ion-list>
     </ion-content>
-
   </ion-menu>
 
   <ion-router-outlet id="main-content"></ion-router-outlet>
 
+  <!-- yg bawah -->
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="pengaturan" href="/pengaturan">
-        <ion-icon name="settings-outline"></ion-icon>
-        <ion-label>Pengaturan</ion-label>
+      <ion-tab-button tab="home" href="/home">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Dashboard</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="about" href="/about">
-        <ion-icon name="help-circle-outline"></ion-icon>
-        <ion-label>About</ion-label>
+      <ion-tab-button tab="product-list" href="/product-list">
+        <ion-icon name="list-outline"></ion-icon>
+        <ion-label>Produk</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="logout()">
-        <ion-icon name="log-out-outline"></ion-icon>
-        <ion-label>Logout</ion-label>
+      <ion-tab-button tab="transaction" href="/transaction">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <ion-label>Transaksi</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="profile" href="/profile">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label>Profil</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-
 </ion-app>
