@@ -80,4 +80,13 @@ export class ProductService {
       }
     }
   }
+
+  tambahStok(productId: number, jumlah: number): void {
+    for (var i = 0; i < this.products.length; i++) {
+      if (this.products[i].id === productId) {
+        this.products[i].stok += jumlah;
+        break;
+      }
+    }
+  }
 }

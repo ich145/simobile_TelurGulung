@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { CartItem } from '../models/cart-item.model';
+import { ProductService } from './product.services';
 
 @Injectable({
     providedIn: 'root'
@@ -9,16 +10,17 @@ export class CartService {
 
     cartItems: CartItem[] = [];
 
-    constructor() { }
+    constructor(private productService: ProductService) { }
 
     addToCart(product: Product) {
-        var found = false;
+        if (product.stok <= 0) {
+            return;
+        }
 
+        var found = false;
         for (var i = 0; i < this.cartItems.length; i++) {
             if (this.cartItems[i].product.id == product.id) {
-                if (this.cartItems[i].quantity < product.stok) {
-                    this.cartItems[i].quantity++;
-                }
+                this.cartItems[i].quantity++;
                 found = true;
                 break;
             }
@@ -26,13 +28,16 @@ export class CartService {
         if (found == false) {
             this.cartItems.push({ product: product, quantity: 1 });
         }
+
+        this.productService.kurangiStok(product.id, 1);
     }
 
     increaseQuantity(productId: number) {
         for (var i = 0; i < this.cartItems.length; i++) {
             if (this.cartItems[i].product.id == productId) {
-                if (this.cartItems[i].quantity < this.cartItems[i].product.stok) {
+                if (this.cartItems[i].product.stok > 0) {
                     this.cartItems[i].quantity++;
+                    this.productService.kurangiStok(productId, 1);
                 }
                 break;
             }
@@ -43,6 +48,7 @@ export class CartService {
         for (var i = 0; i < this.cartItems.length; i++) {
             if (this.cartItems[i].product.id == productId) {
                 this.cartItems[i].quantity--;
+                this.productService.tambahStok(productId, 1);
                 if (this.cartItems[i].quantity <= 0) {
                     this.removeFromCart(productId);
                 }
@@ -56,6 +62,8 @@ export class CartService {
         for (var i = 0; i < this.cartItems.length; i++) {
             if (this.cartItems[i].product.id != productId) {
                 newCartItems.push(this.cartItems[i]);
+            } else {
+                this.productService.tambahStok(productId, this.cartItems[i].quantity);
             }
         }
         this.cartItems = newCartItems;

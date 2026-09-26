@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/product-list"></ion-back-button>
     </ion-buttons>
@@ -18,9 +18,7 @@
       <ion-buttons slot="end">
         <ion-button (click)="kurangQty(item.product.id)">-</ion-button>
         <ion-note>{{ item.quantity }}</ion-note>
-        <ion-button
-          (click)="tambahQty(item.product.id)"
-          [disabled]="item.quantity >= item.product.stok">+</ion-button>
+        <ion-button (click)="tambahQty(item.product.id)" [disabled]="item.quantity >= item.product.stok">+</ion-button>
         <ion-button color="danger" (click)="hapusItem(item.product.id)">Hapus</ion-button>
       </ion-buttons>
     </ion-item>
@@ -35,7 +33,11 @@
     <ion-note slot="end">Rp{{ total }}</ion-note>
   </ion-item>
 
-  <ion-button expand="block" [disabled]="cartItems.length === 0" (click)="checkout()">
+  <ion-button id="btnCheckout" expand="block" [disabled]="cartItems.length === 0">
     Konfirmasi Transaksi
   </ion-button>
+
+  <ion-alert trigger="btnCheckout" header="Konfirmasi Transaksi"
+    [message]="'Total belanja Rp' + total + '. Simpan transaksi ini ke riwayat?'" [buttons]="alertButtons">
+  </ion-alert>
 </ion-content>

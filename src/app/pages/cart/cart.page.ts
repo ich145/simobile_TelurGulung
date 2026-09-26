@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.services';
 import { TransactionService } from '../../services/transaction.services';
 import { CartItem } from '../../models/cart-item.model';
-import { ProductService } from '../../services/product.services';
 
 @Component({
   selector: 'app-cart',
@@ -17,11 +15,14 @@ export class CartPage implements OnInit {
   cartItems: CartItem[] = [];
   total: number = 0;
 
+  alertButtons = [
+    { text: 'Batal', role: 'cancel' },
+    { text: 'Konfirmasi', handler: () => { this.checkout(); } }
+  ]
+
   constructor(
     private cartService: CartService,
     private transactionService: TransactionService,
-    private productService: ProductService,
-    private alertController: AlertController,
     private router: Router
   ) { }
 
@@ -53,31 +54,10 @@ export class CartPage implements OnInit {
     this.refreshCart();
   }
 
-  async checkout() {
-    if (this.cartItems.length === 0) {
-      return;
-    }
-
-    const alert = await this.alertController.create({
-      header: 'Konfirmasi Transaksi',
-      message: 'Total belanja Rp' + this.total + '. Simpan transaksi ini?',
-      buttons: [
-        { text: 'Batal', role: 'cancel' },
-        {
-          text: 'Konfirmasi',
-          handler: () => {
-            for (var i = 0; i < this.cartItems.length; i++) {
-              this.productService.kurangiStok(this.cartItems[i].product.id, this.cartItems[i].quantity);
-            }
-            this.transactionService.addTransaction(this.cartItems, this.total);
-            this.cartService.clearCart();
-            this.refreshCart();
-            this.router.navigate(['/transaction-history']);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+  checkout() {
+    this.transactionService.addTransaction(this.cartItems, this.total);
+    this.cartService.clearCart();
+    this.refreshCart();
+    this.router.navigate(['/transaction-history']);
   }
 }
