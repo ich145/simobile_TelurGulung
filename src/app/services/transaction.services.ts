@@ -18,7 +18,7 @@ export class TransactionService {
 
         const transaction: Transaction = {
             id: this.getNextId(),
-            tanggal: new Date().toISOString(),
+            tanggal: new Date(),
             items: copiedItems,
             total: total,
         };
@@ -51,5 +51,21 @@ export class TransactionService {
             }
         }
         return maxId + 1;
+    }
+
+    formatTanggal(tanggal: Date): string {
+        var arrayOfMonths = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        var d = tanggal.getDate();
+        var m = tanggal.getMonth();
+        var y = tanggal.getFullYear();
+        var h = tanggal.getHours();
+        var i = tanggal.getMinutes();
+
+        var jamStr = h < 10 ? '0' + h : '' + h;
+        var menitStr = i < 10 ? '0' + i : '' + i;
+
+        return d + ' ' + arrayOfMonths[m] + ' ' + y + ', ' + jamStr + ':' + menitStr;
     }
 }

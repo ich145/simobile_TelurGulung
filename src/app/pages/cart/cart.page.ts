@@ -60,4 +60,8 @@ export class CartPage implements OnInit {
     this.refreshCart();
     this.router.navigate(['/transaction-history']);
   }
+
+  getTotal(): number {
+    return this.cartService.getTotal();
+  }
 }

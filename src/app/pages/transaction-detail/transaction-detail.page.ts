@@ -18,6 +18,10 @@ export class TransactionDetailPage implements OnInit {
     private transactionService: TransactionService
   ) { }
 
+  formatTanggal(tanggal: Date): string {
+    return this.transactionService.formatTanggal(tanggal);
+  }
+
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');

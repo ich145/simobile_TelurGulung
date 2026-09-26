@@ -25,4 +25,8 @@ export class TransactionHistoryPage implements OnInit {
   refreshTransactions() {
     this.transactions = this.transactionService.getTransactions();
   }
+
+  formatTanggal(tanggal: Date): string {
+    return this.transactionService.formatTanggal(tanggal);
+  }
 }

@@ -30,7 +30,7 @@
 
   <ion-item>
     <ion-label><strong>Total</strong></ion-label>
-    <ion-note slot="end">Rp{{ total }}</ion-note>
+    <ion-note slot="end">Rp{{ getTotal() }}</ion-note>
   </ion-item>
 
   <ion-button id="btnCheckout" expand="block" [disabled]="cartItems.length === 0">
