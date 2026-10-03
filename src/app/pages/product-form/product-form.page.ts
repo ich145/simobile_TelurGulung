@@ -13,7 +13,6 @@ import { AnimationController } from '@ionic/angular';
   standalone: false,
 })
 export class ProductFormPage implements OnInit {
-
   productForm!: FormGroup;
 
   isEditMode = false;
@@ -24,7 +23,7 @@ export class ProductFormPage implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
   ) {}
 
   ngOnInit() {
@@ -32,38 +31,19 @@ export class ProductFormPage implements OnInit {
     this.productForm = this.formBuilder.group({
       nama: ['', Validators.required],
 
-      hargaBeli: [
-        null,
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
-      ],
+      hargaBeli: [null, [Validators.required, Validators.min(1)]],
 
-      hargaJual: [
-        null,
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
-      ],
+      hargaJual: [null, [Validators.required, Validators.min(1)]],
 
-      stok: [
-        null,
-        [
-          Validators.required,
-          Validators.min(0)
-        ]
-      ],
+      stok: [null, [Validators.required, Validators.min(0)]],
 
       kategori: ['', Validators.required],
 
-      urlGambar: ['']
+      urlGambar: [''],
     });
 
     // Mengecek apakah sedang Edit atau Tambah
-    this.route.paramMap.subscribe(params => {
-
+    this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
 
       if (idParam) {
@@ -77,7 +57,6 @@ export class ProductFormPage implements OnInit {
 
   // Mengambil data produk untuk mode Edit
   loadProduct(id: number) {
-
     const product = this.productService.getProductById(id);
 
     if (!product) {
@@ -90,28 +69,21 @@ export class ProductFormPage implements OnInit {
       hargaJual: product.hargaJual,
       stok: product.stok,
       kategori: product.kategori,
-      urlGambar: product.urlGambar
+      urlGambar: product.urlGambar,
     });
   }
 
   // Mengecek apakah field sedang error
   isInvalid(fieldName: string): boolean {
-
     const field = this.productForm.get(fieldName);
 
-    return !!(
-      field &&
-      field.invalid &&
-      (field.dirty || field.touched)
-    );
+    return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
   // Simpan produk
   saveProduct() {
-
     // Jika form tidak valid
     if (this.productForm.invalid) {
-
       this.productForm.markAllAsTouched();
 
       return;
@@ -121,7 +93,6 @@ export class ProductFormPage implements OnInit {
 
     // MODE EDIT
     if (this.isEditMode && this.productId !== null) {
-
       const updatedProduct: Product = {
         id: this.productId,
         nama: formValue.nama,
@@ -129,16 +100,14 @@ export class ProductFormPage implements OnInit {
         hargaJual: formValue.hargaJual,
         stok: formValue.stok,
         kategori: formValue.kategori,
-        urlGambar: formValue.urlGambar || ''
+        urlGambar: formValue.urlGambar || '',
       };
 
       this.productService.updateProduct(updatedProduct);
-
     }
 
     // MODE TAMBAH
     else {
-
       const newProduct: Product = {
         id: this.productService.getNextId(),
         nama: formValue.nama,
@@ -146,7 +115,7 @@ export class ProductFormPage implements OnInit {
         hargaJual: formValue.hargaJual,
         stok: formValue.stok,
         kategori: formValue.kategori,
-        urlGambar: formValue.urlGambar || ''
+        urlGambar: formValue.urlGambar || '',
       };
 
       this.productService.addProduct(newProduct);
@@ -160,7 +129,7 @@ export class ProductFormPage implements OnInit {
   cancel() {
     this.router.navigate(['/product-list']);
   }
-  
+
   /*
   // Menghapus produk
   deleteProduct() {
@@ -176,10 +145,10 @@ export class ProductFormPage implements OnInit {
     }
   }*/
 
-
-
   animateForm() {
-    const formElement = document.querySelector('#productFormAnimation') as HTMLElement;
+    const formElement = document.querySelector(
+      '#productFormAnimation',
+    ) as HTMLElement;
 
     if (!formElement) {
       return;
@@ -193,16 +162,22 @@ export class ProductFormPage implements OnInit {
         {
           offset: 0,
           opacity: '0',
-          transform: 'translateY(30px)'
+          transform: 'translateY(30px)',
         },
         {
           offset: 1,
           opacity: '1',
-          transform: 'translateY(0)'
-        }
+          transform: 'translateY(0)',
+        },
       ]);
 
     animation.play();
+  }
+  
+  ionViewWillEnter() {
+    if (this.productForm && !this.isEditMode) {
+      this.productForm.reset();
+    }
   }
 
   ionViewDidEnter() {
