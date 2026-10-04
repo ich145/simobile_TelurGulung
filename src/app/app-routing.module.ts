@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'transaction-detail/:id',
     loadChildren: () => import('./pages/transaction-detail/transaction-detail.module').then( m => m.TransactionDetailPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 
 
 ];
