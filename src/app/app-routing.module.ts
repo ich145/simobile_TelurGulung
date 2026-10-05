@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'pengaturan',
+    loadChildren: () => import('./pages/pengaturan/pengaturan.module').then( m => m.PengaturanPageModule)
   },
+
 
 
 ];

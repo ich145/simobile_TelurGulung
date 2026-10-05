@@ -13,7 +13,7 @@ export class AppComponent {
     alert('Logout berhasil!');
   }
 
-  toggleDarkMode(event: any) {
+  /*toggleDarkMode(event: any) {
     document.body.classList.toggle('dark', event.detail.checked);
-  }
+  }*/
 }
