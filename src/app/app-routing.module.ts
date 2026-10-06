@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'pengaturan',
     loadChildren: () => import('./pages/pengaturan/pengaturan.module').then( m => m.PengaturanPageModule)
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+  },
 
 
 
