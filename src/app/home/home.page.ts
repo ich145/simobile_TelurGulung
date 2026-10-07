@@ -11,6 +11,10 @@ import { TransactionService } from '../services/transaction.services';
 export class HomePage implements OnInit {
 
   totalProduk: number = 0;
+  totalTransaksiHariIni: number = 0; // Frekuensi Transaksi
+  totalPenjualanHariIni: number = 0; // Total Nominal Rp
+  produkTerlaris: string = '-';
+  today: Date = new Date();
 
   constructor(
     private productService: ProductService,
@@ -18,21 +22,24 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.hitungTotalProduk();
+    this.refreshDashboardData();
   }
 
-  hitungTotalProduk() {
+  // WAJIB: dipanggil setiap kali Tab Dashboard dibuka
+  ionViewDidEnter() {
+    this.refreshDashboardData();
+  }
+
+  refreshDashboardData() {
+    this.today = new Date();
+    
+    // 1. Jumlah jenis produk
     const listBarang = this.productService.getProducts();
-    if (listBarang) {
-      this.totalProduk = listBarang.length; // Otomatis ngambil dari service
-    }
-  }
+    this.totalProduk = listBarang ? listBarang.length : 0;
 
-  getTotalTransaksi(): number {
-    return this.transactionService.getTotalHariIni();
-  }
-
-  getProdukTerlaris(): string {
-    return this.transactionService.getProdukTerlaris();
+    // 2. Jumlah transaksi & total Rp hari ini dari TransactionService
+    this.totalTransaksiHariIni = this.transactionService.getTodayCount();
+    this.totalPenjualanHariIni = this.transactionService.getTotalHariIni();
+    this.produkTerlaris = this.transactionService.getProdukTerlaris();
   }
 }

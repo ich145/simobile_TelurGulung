@@ -20,8 +20,10 @@
   <div id="container">
     <strong>Ringkasan Hari Ini</strong>
     <p>Jumlah Produk: {{ totalProduk }}</p>
-    <p>Total Transaksi: Rp {{ getTotalTransaksi() }}</p>
-    <p>Produk Terlaris: {{ getProdukTerlaris() }}</p>
+    <p>Jumlah Transaksi: {{ totalTransaksiHariIni }}</p>
+    <p>Total Penjualan: Rp {{ totalPenjualanHariIni }}</p>
+    <p>Produk Terlaris: {{ produkTerlaris }}</p>
+    <ion-button routerLink="/laporan">Lihat Laporan</ion-button>
   </div>
 
 </ion-content>

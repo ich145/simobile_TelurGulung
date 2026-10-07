@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text="Dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Laporan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ringkasan Transaksi</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Jumlah Transaksi Hari Ini: {{ totalTransaksiHariIni }}</p>
+      <p>Total Penjualan Hari Ini: Rp {{ totalPenjualanHariIni }}</p>
+      <p>Produk Terlaris: {{ produkTerlaris }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" routerLink="/home">Kembali ke Dashboard</ion-button>
+</ion-content>

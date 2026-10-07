@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   },
+  {
+    path: 'laporan',
+    loadChildren: () => import('./pages/laporan/laporan.module').then( m => m.LaporanPageModule)
+  },
 
 
 

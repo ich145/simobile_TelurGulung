@@ -7,10 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
+      <ion-title size="large">Profil</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <h3>Profil Toko</h3>
+  <p><b>Nama Toko:</b> {{ namaToko }}</p>
+  <p><b>Pemilik:</b> {{ namaPemilik }}</p>
 </ion-content>

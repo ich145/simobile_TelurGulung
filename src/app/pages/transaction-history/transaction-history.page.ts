@@ -18,7 +18,7 @@ export class TransactionHistoryPage implements OnInit {
     this.refreshTransactions();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.refreshTransactions();
   }
 

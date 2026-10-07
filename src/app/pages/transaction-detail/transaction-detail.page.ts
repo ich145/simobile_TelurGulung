@@ -18,15 +18,24 @@ export class TransactionDetailPage implements OnInit {
     private transactionService: TransactionService
   ) { }
 
-  formatTanggal(tanggal: Date): string {
-    return this.transactionService.formatTanggal(tanggal);
+  ngOnInit() {
+    this.loadDetail();
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      const id = idParam ? Number(idParam) : 0;
-      this.transaction = this.transactionService.getTransactionById(id);
-    });
+  ionViewDidEnter() {
+    this.loadDetail();
+  }
+
+  loadDetail() {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = idParam ? Number(idParam) : 0;
+    this.transaction = this.transactionService.getTransactionById(id);
+  }
+
+  formatTanggal(tanggal?: Date): string {
+    if (!tanggal) {
+      return '-';
+    }
+    return this.transactionService.formatTanggal(tanggal);
   }
 }
