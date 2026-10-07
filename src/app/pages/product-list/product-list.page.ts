@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.services';
 import { Product } from '../../models/product.model';
 import { Router } from '@angular/router';
@@ -17,7 +17,6 @@ export class ProductListPage implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
   ) {}
 
   goToDetail(product: Product) {
@@ -39,7 +38,6 @@ export class ProductListPage implements OnInit {
     this.allProducts = [...this.productService.getProducts()];
     this.filteredProducts = [...this.allProducts];
     //this.searchTerm = '';
-    this.cdr.detectChanges();
   }
 
   filterProducts(event?: CustomEvent) {
