@@ -35,9 +35,8 @@ export class ProductListPage implements OnInit {
   }
 
   private loadProducts() {
-    this.allProducts = [...this.productService.getProducts()];
-    this.filteredProducts = [...this.allProducts];
-    //this.searchTerm = '';
+    this.allProducts = this.productService.getProducts();
+    this.filterProducts();
   }
 
   filterProducts(event?: CustomEvent) {
@@ -46,7 +45,7 @@ export class ProductListPage implements OnInit {
     const term = this.normalizeText(value);
 
     if (!term) {
-      this.filteredProducts = [...this.allProducts];
+      this.filteredProducts = this.allProducts;
     } else {
       this.filteredProducts = this.allProducts.filter((product) =>
         this.normalizeText(product.nama).startsWith(term),
