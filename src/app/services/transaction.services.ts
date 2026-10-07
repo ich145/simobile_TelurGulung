@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Transaction } from '../models/transaction.model';
 import { CartItem } from '../models/cart-item.model';
+import { ProductService } from './product.services';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,12 @@ import { CartItem } from '../models/cart-item.model';
 export class TransactionService {
   private transactions: Transaction[] = [];
 
-  constructor() {}
+  constructor(
+    private productService: ProductService
+  ) { }
 
   getTransactions(): Transaction[] {
-    return [...this.transactions];
+    return this.transactions;
   }
 
   getTransactionById(id: number): Transaction | undefined {
@@ -24,21 +27,20 @@ export class TransactionService {
   }
 
   addTransaction(items: CartItem[], total: number): Transaction {
-    var newId = this.transactions.length + 1;
+    var copiedItems: CartItem[] = [];
+    for (var i = 0; i < items.length; i++) {
+      copiedItems.push({ product: items[i].product, quantity: items[i].quantity });
+    }
     var newTransaction: Transaction = {
-      id: newId,
+      id: this.transactions.length + 1,
       tanggal: new Date(),
-      items: items.map(item => ({
-        quantity: item.quantity,
-        product: { ...item.product }
-      })),
+      items: copiedItems,
       total: total
     };
-    this.transactions = [...this.transactions, newTransaction];
+    this.transactions.push(newTransaction);
     return newTransaction;
   }
 
-  // Menghitung JUMLAH/FREKUENSI transaksi hari ini
   getTodayCount(): number {
     var hariIni = new Date();
     var count = 0;
@@ -55,7 +57,6 @@ export class TransactionService {
     return count;
   }
 
-  // Menghitung TOTAL NOMINAL PENJUALAN (Rp) hari ini
   getTotalHariIni(): number {
     var hariIni = new Date();
     var total = 0;
@@ -72,38 +73,34 @@ export class TransactionService {
     return total;
   }
 
-  getProdukTerlaris(): string {
-    if (this.transactions.length === 0) {
-      return '-';
-    }
-
-    var rekap: { [nama: string]: number } = {};
-
+  private hitungTerjual(namaProduk: string): number {
+    var jumlah = 0;
     for (var i = 0; i < this.transactions.length; i++) {
-      var items = this.transactions[i].items;
-      for (var j = 0; j < items.length; j++) {
-        var nama = items[j].product.nama;
-        var qty = items[j].quantity;
-        if (rekap[nama]) {
-          rekap[nama] += qty;
-        } else {
-          rekap[nama] = qty;
+      for (var j = 0; j < this.transactions[i].items.length; j++) {
+        if (this.transactions[i].items[j].product.nama == namaProduk) {
+          jumlah += this.transactions[i].items[j].quantity;
         }
       }
     }
+    return jumlah;
+  }
 
+  getProdukTerlaris(): string {
+    var daftarProduk = this.productService.getProducts();
     var terlaris = '-';
-    var maxQty = 0;
+    var terjualTerbanyak = 0;
 
-    for (var key in rekap) {
-      if (rekap[key] > maxQty) {
-        maxQty = rekap[key];
-        terlaris = key;
+    for (var i = 0; i < daftarProduk.length; i++) {
+      var terjual = this.hitungTerjual(daftarProduk[i].nama);
+      if (terjual > terjualTerbanyak) {
+        terjualTerbanyak = terjual;
+        terlaris = daftarProduk[i].nama;
       }
     }
-
     return terlaris;
   }
+
+
 
   formatTanggal(tanggal: Date): string {
     var d = new Date(tanggal);

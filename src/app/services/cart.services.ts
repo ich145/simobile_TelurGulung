@@ -46,33 +46,32 @@ export class CartService {
   }
 
   decreaseQuantity(productId: number) {
-    var done = false;
-    for (var i = 0; i < this.cartItems.length && !done; i++) {
+    for (var i = 0; i < this.cartItems.length; i++) {
       if (this.cartItems[i].product.id === productId) {
         this.cartItems[i].quantity--;
         this.productService.tambahStok(productId, 1);
-
         if (this.cartItems[i].quantity <= 0) {
-          this.cartItems.splice(i, 1);
+          this.removeFromCart(productId);
         }
-        done = true;
+        break;
       }
     }
   }
 
   removeFromCart(productId: number) {
-    var done = false;
-    for (var i = 0; i < this.cartItems.length && !done; i++) {
-      if (this.cartItems[i].product.id === productId) {
+    var newCartItems: CartItem[] = [];
+    for (var i = 0; i < this.cartItems.length; i++) {
+      if (this.cartItems[i].product.id !== productId) {
+        newCartItems.push(this.cartItems[i]);
+      } else {
         this.productService.tambahStok(productId, this.cartItems[i].quantity);
-        this.cartItems.splice(i, 1);
-        done = true;
       }
     }
+    this.cartItems = newCartItems;
   }
 
   getCartItems(): CartItem[] {
-    return [...this.cartItems];
+    return this.cartItems;
   }
 
   getTotal(): number {

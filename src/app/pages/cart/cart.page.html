@@ -33,9 +33,13 @@
     <ion-note slot="end">Rp{{ getTotal() }}</ion-note>
   </ion-item>
 
-  <ion-button expand="block" [disabled]="cartItems.length === 0" (click)="checkout()">
+  <ion-button id="btnCheckout" expand="block" [disabled]="getCartItems().length === 0" (click)="checkout()">
     Konfirmasi Transaksi
   </ion-button>
+
+  <ion-alert trigger="btnCheckout" header="Berhasil" message="Transaksi berhasil disimpan ke riwayat."
+    [buttons]="alertButtons">
+  </ion-alert>
 
   <ion-button expand="block" fill="outline" routerLink="/transaction-history">
     Lihat Riwayat Transaksi
