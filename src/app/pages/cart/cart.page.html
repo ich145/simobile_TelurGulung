@@ -18,7 +18,7 @@
       <ion-buttons slot="end">
         <ion-button (click)="kurangQty(item.product.id)">-</ion-button>
         <ion-note>{{ item.quantity }}</ion-note>
-        <ion-button (click)="tambahQty(item.product.id)" [disabled]="item.quantity >= item.product.stok">+</ion-button>
+        <ion-button (click)="tambahQty(item.product.id)" [disabled]="item.product.stok <= 0">+</ion-button>
         <ion-button color="danger" (click)="hapusItem(item.product.id)">Hapus</ion-button>
       </ion-buttons>
     </ion-item>
@@ -33,11 +33,15 @@
     <ion-note slot="end">Rp{{ getTotal() }}</ion-note>
   </ion-item>
 
-  <ion-button id="btnCheckout" expand="block" [disabled]="cartItems.length === 0">
+  <ion-button id="btnCheckout" expand="block" [disabled]="cartItems.length === 0" (click)="checkout()">
     Konfirmasi Transaksi
   </ion-button>
 
-  <ion-alert trigger="btnCheckout" header="Konfirmasi Transaksi"
-    [message]="'Total belanja Rp' + total + '. Simpan transaksi ini ke riwayat?'" [buttons]="alertButtons">
+  <ion-alert trigger="btnCheckout" header="Berhasil" message="Transaksi berhasil disimpan ke riwayat."
+    [buttons]="alertButtons">
   </ion-alert>
+
+  <ion-button expand="block" fill="outline" routerLink="/transaction-history">
+    Lihat Riwayat Transaksi
+  </ion-button>
 </ion-content>

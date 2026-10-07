@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.services';
 import { TransactionService } from '../../services/transaction.services';
 import { CartItem } from '../../models/cart-item.model';
@@ -15,15 +14,11 @@ export class CartPage implements OnInit {
   cartItems: CartItem[] = [];
   total: number = 0;
 
-  alertButtons = [
-    { text: 'Batal', role: 'cancel' },
-    { text: 'Konfirmasi', handler: () => { this.checkout(); } }
-  ]
+  alertButtons = ['OK'];
 
   constructor(
     private cartService: CartService,
     private transactionService: TransactionService,
-    private router: Router
   ) { }
 
   ngOnInit() {
@@ -55,10 +50,11 @@ export class CartPage implements OnInit {
   }
 
   checkout() {
-    this.transactionService.addTransaction(this.cartItems, this.total);
+    var items = this.cartService.getCartItems();
+    var total = this.cartService.getTotal();
+    this.transactionService.addTransaction(items, total);
     this.cartService.clearCart();
     this.refreshCart();
-    this.router.navigate(['/transaction-history']);
   }
 
   getTotal(): number {
